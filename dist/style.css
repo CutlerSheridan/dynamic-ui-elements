@@ -1,0 +1,40 @@
+:root {
+    font-size: 62.5%;
+    font-family: Helvetica;
+}
+* {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+body {
+    height: 100%;
+    width: 100%;
+    font-size: 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+.nav-option {
+    padding: 1.5rem 0;
+    width: calc(100% / 3);
+    text-align: center;
+    background: pink;
+    /* border: 1px solid red; */
+}
+.nav-option.dropdown {
+    padding: 0;
+}
+/* .dropdown {
+    transition: all 0.2s linear;
+} */
+.dropdown-option {
+    padding: 1.5rem 0;
+}
+.dropdown-option-active {
+    background: blue;
+}

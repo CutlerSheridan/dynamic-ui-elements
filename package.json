@@ -1,0 +1,26 @@
+{
+    "name": "@username/dynamic-ui-elements",
+    "version": "1.0.0",
+    "description": "Some dynamic UI elements to transform your HTML",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack",
+        "start": "webpack serve --open"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CutlerSheridan/dynamic-ui-elements.git"
+    },
+    "author": "Cutler Sheridan <cutler.sheridan@gmail.com>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/CutlerSheridan/dynamic-ui-elements/issues"
+    },
+    "homepage": "https://github.com/CutlerSheridan/dynamic-ui-elements#readme",
+    "devDependencies": {
+        "webpack": "^5.72.1",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.9.0"
+    }
+}
