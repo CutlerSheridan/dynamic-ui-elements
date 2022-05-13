@@ -9,6 +9,16 @@ const imgs = [
     "./images/sarah.jpg",
     "./images/erdtree.jpg",
     "./images/malenia.jpg",
+    "./images/helmet.jpg",
+    "./images/seluvis.jpg",
+    "./images/sarah.jpg",
+    "./images/erdtree.jpg",
+    "./images/malenia.jpg",
+    "./images/helmet.jpg",
+    "./images/seluvis.jpg",
+    "./images/sarah.jpg",
+    "./images/erdtree.jpg",
+    "./images/malenia.jpg",
 ];
 
 const elementBeforeCarousel = document.querySelector(".space-after-navbar");

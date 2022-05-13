@@ -58,14 +58,17 @@ nav {
 /* --- CAROUSEL START --- */
 .carousel-container {
     /* margin: 0 auto; */
-    margin: auto;
-    border: 10px solid yellow;
+    margin: 2rem auto;
+    /* border: 10px solid brown; */
+    /* border-radius: 0.5rem; */
 }
 .carousel {
-    /* border: 10px solid purple; */
+    border: 10px solid purple;
 }
-.carousel-inner {
+.carousel-dot {
+    background: darkgrey;
 }
-img {
+.carousel-dot-active {
+    background: grey;
 }
 /* --- CAROUSEL END --- */

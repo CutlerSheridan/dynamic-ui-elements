@@ -66,6 +66,9 @@ const createCarousel = (
     transitionStyle = "linear"
 ) => {
     const carouselContainer = document.createElement("div");
+    carouselContainer.style.display = "flex";
+    carouselContainer.style.flexDirection = "column";
+    carouselContainer.style.alignItems = "center";
     carouselContainer.style.maxWidth = carouselWidth;
     carouselContainer.classList.add("carousel-container");
     const carousel = document.createElement("div");
@@ -87,12 +90,7 @@ const createCarousel = (
         _createNextButton(carouselInner)
     );
 
-    let tempImgSelectorDots = "";
-    for (let i = 0; i < imgFilesArray.length; i++) {
-        tempImgSelectorDots += `+${i === imgFilesArray.length - 1 ? "" : " "}`;
-    }
-
-    carouselContainer.append(tempImgSelectorDots);
+    carouselContainer.append(_createNavDots(carouselInner));
     return carouselContainer;
 };
 const _createInnerCarousel = (
@@ -115,6 +113,54 @@ const _createInnerCarousel = (
     });
 
     return carouselInner;
+};
+const _createNavDots = (carouselInner) => {
+    const dotContainer = document.createElement("div");
+    const imgs = carouselInner.children;
+    for (let i = 0; i < imgs.length; i++) {
+        const dot = _createDot();
+        dot.dataset.index = i;
+        dotContainer.append(dot);
+        if (i === 0) {
+            dot.classList.add("carousel-dot-active");
+        }
+    }
+    dotContainer.style.margin = "1rem 0";
+    dotContainer.style.display = "flex";
+    dotContainer.style.gap = ".5rem";
+
+    carouselInner.addEventListener("transitionend", () => {
+        const imgWidth = carouselInner.offsetWidth;
+        const indexOfPx = carouselInner.style.left.indexOf("px");
+        let currentPosition = +carouselInner.style.left.slice(0, indexOfPx);
+        if (currentPosition < 0) {
+            currentPosition *= -1;
+        }
+
+        let imgIndex = 0;
+        if (currentPosition !== 0) {
+            imgIndex = currentPosition / imgWidth;
+        }
+        const dots = [...dotContainer.children];
+        dots.forEach((dot) => {
+            dot.classList.remove("carousel-dot-active");
+            if (dot.dataset.index == imgIndex) {
+                dot.classList.add("carousel-dot-active");
+            }
+        });
+    });
+
+    return dotContainer;
+};
+const _createDot = () => {
+    const dot = document.createElement("div");
+    dot.classList.add("carousel-dot");
+    const size = 1.25;
+    dot.style.height = size + "rem";
+    dot.style.width = size + "rem";
+    dot.style.borderRadius = "1rem";
+    dot.style.transition = "all .13s linear";
+    return dot;
 };
 const _createNextButton = (carouselInner) => {
     const nextBtn = _createButton();
@@ -178,6 +224,7 @@ const _findNewPosition = (carouselInner, direction, func) => {
     if (currentPosition > 0) {
         currentPosition *= -1;
     }
+    console.log(currentPosition);
     return currentPosition;
 };
 

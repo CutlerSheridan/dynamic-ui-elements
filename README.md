@@ -62,13 +62,21 @@ Accepts the following arguments:
 
 ##### Behavior
 
--   make arrows invisible unless you're hovering over image (what about mobile though? should they always be visible or to the sides?)
--   make image a link to the image file
--   make it switch every five seconds using a while loop that adds an inner event listener (that only triggers once) for the next/previous buttons to break the loop and stop transitioning every five seconds
+-   make carousel image a link to the image file
+-   make carousel switch every five seconds using a while loop that adds an inner event listener (that only triggers once) for the next/previous buttons to break the loop and stop transitioning every five seconds
+-   recreate carousel upon document resize
+
+##### Style
+
+-   figure out why carousel images become misaligned when dev console is closed but stay perfect when it's open
+-   make carousel arrows invisible unless you're hovering over image (what about mobile though? should they always be visible or to the sides?)
+-   Raise dropdown's z-axis
 -   fix dropdown alignment
 
 #### DONE
 
+-   _0.2.2_
+-   add carousel dots that indicate which image you're looking at
 -   _0.2.1_
 -   make carousel pixel-perfect
 -   add optional parameters for carousel
