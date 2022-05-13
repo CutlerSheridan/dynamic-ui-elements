@@ -2,7 +2,7 @@
 
 ## A small collection of pre-made functions to make your DOM elements more dynamic
 
-### createDropdown(menuContainerElement)
+### turnIntoDropdown(menuContainerElement)
 
 In your HTML, create a structure like this:
 
@@ -39,8 +39,28 @@ Accepts the following arguments:
 | transitionTime (= "0.2s")    | Customize the transition time             |
 | transitionStyle (= "linear") | Customize the transition style            |
 
+#### TO-DO NEXT
+
+-   add dots underneath that indicate which one you're on and are clickable to navigate
+
+#### TO-DO LATER
+
+##### Features
+
+##### Behavior
+
+-   make arrows invisible unless you're hovering over image (what about mobile though? should they always be visible or to the sides?)
+-   make image a link to the image file
+-   make it switch every five seconds using a while loop that adds an inner event listener (that only triggers once) for the next/previous buttons to break the loop and stop transitioning every five seconds
+-   fix dropdown alignment
+
 #### DONE
 
+-   _0.2.0_
+-   write image carousel creation function
+-   add next button to swipe right
+-   extract some logic into another function to reuse for previous button
+-   add previous button to swipe left
 -   _0.1.0_
 -   create a function that makes DOM element disappear when scrolling down and reappear when scrolling up
 -   _0.0.2_
