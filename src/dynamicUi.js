@@ -59,7 +59,12 @@ const makeNavbarDisappearWhenScrollingDown = (
     });
 };
 
-const createCarousel = (imgFilesArray, carouselWidth = "50%") => {
+const createCarousel = (
+    imgFilesArray,
+    carouselWidth = "50%",
+    transitionTime = ".3s",
+    transitionStyle = "linear"
+) => {
     const carouselContainer = document.createElement("div");
     carouselContainer.style.maxWidth = carouselWidth;
     carouselContainer.classList.add("carousel-container");
@@ -70,12 +75,16 @@ const createCarousel = (imgFilesArray, carouselWidth = "50%") => {
     carousel.style.overflow = "hidden";
     carousel.classList.add("carousel");
 
-    const carouselInner = _createInnerCarousel(imgFilesArray);
+    const carouselInner = _createInnerCarousel(
+        imgFilesArray,
+        transitionTime,
+        transitionStyle
+    );
     carousel.append(carouselInner);
     carouselContainer.append(carousel);
     carousel.append(
-        _createPreviousButton(carousel, carouselInner),
-        _createNextButton(carousel, carouselInner)
+        _createPreviousButton(carouselInner),
+        _createNextButton(carouselInner)
     );
 
     let tempImgSelectorDots = "";
@@ -86,12 +95,16 @@ const createCarousel = (imgFilesArray, carouselWidth = "50%") => {
     carouselContainer.append(tempImgSelectorDots);
     return carouselContainer;
 };
-const _createInnerCarousel = (imgFilesArray) => {
+const _createInnerCarousel = (
+    imgFilesArray,
+    transitionTime,
+    transitionStyle
+) => {
     const carouselInner = document.createElement("div");
     carouselInner.style.position = "relative";
     carouselInner.style.left = "0";
     carouselInner.style.display = "flex";
-    carouselInner.style.transition = "all .3s linear";
+    carouselInner.style.transition = `all ${transitionTime} ${transitionStyle}`;
     carouselInner.classList.add("carousel-inner");
 
     imgFilesArray.forEach((file) => {
@@ -103,20 +116,20 @@ const _createInnerCarousel = (imgFilesArray) => {
 
     return carouselInner;
 };
-const _createNextButton = (carousel, carouselInner) => {
-    const nextBtn = _createButton(carousel);
+const _createNextButton = (carouselInner) => {
+    const nextBtn = _createButton();
     nextBtn.textContent = ">";
     nextBtn.style.right = "0";
 
     nextBtn.addEventListener("mousedown", () => {
         const newPosition = _findNewPosition(carouselInner, 1, (a, b) => a + b);
-        carouselInner.style.left = -1 * newPosition + "px";
+        carouselInner.style.left = newPosition + "px";
     });
 
     return nextBtn;
 };
-const _createPreviousButton = (carousel, carouselInner) => {
-    const prevBtn = _createButton(carousel);
+const _createPreviousButton = (carouselInner) => {
+    const prevBtn = _createButton();
     prevBtn.textContent = "<";
     prevBtn.style.left = "0";
 
@@ -126,11 +139,11 @@ const _createPreviousButton = (carousel, carouselInner) => {
             -1,
             (a, b) => a - b
         );
-        carouselInner.style.left = -1 * newPosition + "px";
+        carouselInner.style.left = newPosition + "px";
     });
     return prevBtn;
 };
-const _createButton = (carousel) => {
+const _createButton = () => {
     const btn = document.createElement("button");
 
     btn.style.position = "absolute";
@@ -160,6 +173,10 @@ const _findNewPosition = (carouselInner, direction, func) => {
         if (currentPosition < 0) {
             currentPosition = maxPosition;
         }
+    }
+
+    if (currentPosition > 0) {
+        currentPosition *= -1;
     }
     return currentPosition;
 };

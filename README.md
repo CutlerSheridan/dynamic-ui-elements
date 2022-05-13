@@ -39,6 +39,19 @@ Accepts the following arguments:
 | transitionTime (= "0.2s")    | Customize the transition time             |
 | transitionStyle (= "linear") | Customize the transition style            |
 
+### createCarousel()
+
+Pass an array of file paths leading to images and get an image carousel.
+
+Accepts the following arguments:
+
+| Argument (= default)         | Description                            |
+| ---------------------------- | -------------------------------------- |
+| imgFilesArray                | Required. An array of image file paths |
+| carouselWidth (= "50%")      | Customize the width of the carousel    |
+| transitionTime (= "0.3s")    | Customize the transition time          |
+| transitionStyle (= "linear") | Customize the transition style         |
+
 #### TO-DO NEXT
 
 -   add dots underneath that indicate which one you're on and are clickable to navigate
@@ -56,6 +69,10 @@ Accepts the following arguments:
 
 #### DONE
 
+-   _0.2.1_
+-   make carousel pixel-perfect
+-   add optional parameters for carousel
+-   clean up carousel code
 -   _0.2.0_
 -   write image carousel creation function
 -   add next button to swipe right
