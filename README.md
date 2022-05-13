@@ -54,6 +54,7 @@ Accepts the following arguments:
 
 #### TO-DO NEXT
 
+-   figure out a better way to dynamically calculate the arrow size
 -   make carousel dots clickable to navigate
 
 #### TO-DO LATER
@@ -69,12 +70,14 @@ Accepts the following arguments:
 ##### Style
 
 -   figure out why carousel images become misaligned when dev console is closed but stay perfect when it's open
--   make carousel arrows invisible unless you're hovering over image (what about mobile though? should they always be visible or to the sides?)
 -   Raise dropdown's z-axis
 -   fix dropdown alignment
 
 #### DONE
 
+-   _0.2.4_
+-   make carousel arrows invisible unless you're hovering over image
+-   prevent the arrows from disappearing on mobile
 -   _0.2.3_
 -   make dots change image indication upon clicking instead of upon transition end
 -   make next/previous buttons highlight on hover

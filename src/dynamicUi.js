@@ -89,6 +89,15 @@ const createCarousel = (
         _createPreviousButton(carouselInner),
         _createNextButton(carouselInner)
     );
+    document.addEventListener(
+        "mousemove",
+        (e) => {
+            if (!e.sourceCapabilities.firesTouchEvents) {
+                _addDesktopArrowHoverBehavior(carouselInner);
+            }
+        },
+        { once: true }
+    );
 
     carouselContainer.append(_createNavDots(carouselInner));
     return carouselContainer;
@@ -114,35 +123,8 @@ const _createInnerCarousel = (
 
     return carouselInner;
 };
-const _createNavDots = (carouselInner) => {
-    const dotContainer = document.createElement("div");
-    dotContainer.classList.add("carousel-dot-container");
-    const imgs = carouselInner.children;
-    for (let i = 0; i < imgs.length; i++) {
-        const dot = _createDot();
-        dot.dataset.index = i;
-        dotContainer.append(dot);
-        if (i === 0) {
-            dot.classList.add("carousel-dot-active");
-        }
-    }
-    dotContainer.style.margin = "1rem 0";
-    dotContainer.style.display = "flex";
-    dotContainer.style.gap = ".5rem";
-
-    return dotContainer;
-};
-const _createDot = () => {
-    const dot = document.createElement("div");
-    dot.classList.add("carousel-dot");
-    const size = 1.25;
-    dot.style.height = size + "rem";
-    dot.style.width = size + "rem";
-    dot.style.borderRadius = "1rem";
-    dot.style.transition = "all .18s linear";
-    return dot;
-};
 const _createNextButton = (carouselInner) => {
+    console.log(`next button height = ${carouselInner.offsetHeight}`);
     const nextBtn = _createButton();
     nextBtn.textContent = ">";
     nextBtn.style.right = "0";
@@ -177,14 +159,16 @@ const _createButton = () => {
     const btn = document.createElement("button");
 
     btn.style.position = "absolute";
-    const size = 6;
-    btn.style.height = size + "rem";
+    const size = 7;
+    btn.style.height = size + 1 + "rem";
     btn.style.width = size + "rem";
     btn.style.background = "black";
     btn.style.border = "none";
     btn.style.color = "white";
     btn.style.opacity = "50%";
     btn.style.cursor = "pointer";
+    btn.style.transition = "all .1s linear";
+    btn.classList.add("carousel-arrow");
 
     btn.addEventListener(
         "mouseenter",
@@ -218,6 +202,68 @@ const _findNewPosition = (carouselInner, direction, func) => {
         currentPosition *= -1;
     }
     return currentPosition;
+};
+const _addDesktopArrowHoverBehavior = (carouselInner) => {
+    const carousel = carouselInner.parentElement;
+    const arrows = [...carousel.children].filter((el) =>
+        el.classList.contains("carousel-arrow")
+    );
+    const targetOpacity = arrows[0].style.opacity;
+    arrows.forEach((arrow) => (arrow.style.opacity = "0"));
+
+    carouselInner.addEventListener("mouseenter", () => {
+        arrows.forEach((arrow) => (arrow.style.opacity = targetOpacity));
+    });
+    arrows.forEach((arrow) =>
+        arrow.addEventListener("mouseenter", (e) => {
+            if (e.relatedTarget !== carouselInner) {
+                arrows.forEach((a) => (a.style.opacity = targetOpacity));
+            }
+        })
+    );
+
+    carouselInner.addEventListener("mouseleave", (e) => {
+        console.log(e);
+        if (e.relatedTarget !== arrows[0] && e.relatedTarget !== arrows[1]) {
+            arrows.forEach((arrow) => (arrow.style.opacity = "0"));
+        }
+    });
+    arrows.forEach((arrow) => {
+        arrow.addEventListener("mouseleave", (e) => {
+            if (e.relatedTarget !== carouselInner) {
+                arrows.forEach((a) => (a.style.opacity = "0"));
+            }
+        });
+    });
+};
+const _createNavDots = (carouselInner) => {
+    console.log(`createNavDots carousel width = ${carouselInner.offsetWidth}`);
+    const dotContainer = document.createElement("div");
+    dotContainer.classList.add("carousel-dot-container");
+    const imgs = carouselInner.children;
+    for (let i = 0; i < imgs.length; i++) {
+        const dot = _createDot();
+        dot.dataset.index = i;
+        dotContainer.append(dot);
+        if (i === 0) {
+            dot.classList.add("carousel-dot-active");
+        }
+    }
+    dotContainer.style.margin = "1rem 0";
+    dotContainer.style.display = "flex";
+    dotContainer.style.gap = ".5rem";
+
+    return dotContainer;
+};
+const _createDot = () => {
+    const dot = document.createElement("div");
+    dot.classList.add("carousel-dot");
+    const size = 1.25;
+    dot.style.height = size + "rem";
+    dot.style.width = size + "rem";
+    dot.style.borderRadius = "1rem";
+    dot.style.transition = "all .18s linear";
+    return dot;
 };
 const _incrementActiveDot = (carouselInner, incrementFunc) => {
     const carouselContainer = carouselInner.parentElement.parentElement;
