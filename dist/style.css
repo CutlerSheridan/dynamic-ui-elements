@@ -64,6 +64,7 @@ nav {
 }
 .carousel {
     border: 10px solid purple;
+    border-radius: 0.7rem;
 }
 .carousel-dot {
     background: darkgrey;

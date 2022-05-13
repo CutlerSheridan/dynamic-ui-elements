@@ -116,6 +116,7 @@ const _createInnerCarousel = (
 };
 const _createNavDots = (carouselInner) => {
     const dotContainer = document.createElement("div");
+    dotContainer.classList.add("carousel-dot-container");
     const imgs = carouselInner.children;
     for (let i = 0; i < imgs.length; i++) {
         const dot = _createDot();
@@ -129,27 +130,6 @@ const _createNavDots = (carouselInner) => {
     dotContainer.style.display = "flex";
     dotContainer.style.gap = ".5rem";
 
-    carouselInner.addEventListener("transitionend", () => {
-        const imgWidth = carouselInner.offsetWidth;
-        const indexOfPx = carouselInner.style.left.indexOf("px");
-        let currentPosition = +carouselInner.style.left.slice(0, indexOfPx);
-        if (currentPosition < 0) {
-            currentPosition *= -1;
-        }
-
-        let imgIndex = 0;
-        if (currentPosition !== 0) {
-            imgIndex = currentPosition / imgWidth;
-        }
-        const dots = [...dotContainer.children];
-        dots.forEach((dot) => {
-            dot.classList.remove("carousel-dot-active");
-            if (dot.dataset.index == imgIndex) {
-                dot.classList.add("carousel-dot-active");
-            }
-        });
-    });
-
     return dotContainer;
 };
 const _createDot = () => {
@@ -159,7 +139,7 @@ const _createDot = () => {
     dot.style.height = size + "rem";
     dot.style.width = size + "rem";
     dot.style.borderRadius = "1rem";
-    dot.style.transition = "all .13s linear";
+    dot.style.transition = "all .18s linear";
     return dot;
 };
 const _createNextButton = (carouselInner) => {
@@ -170,6 +150,8 @@ const _createNextButton = (carouselInner) => {
     nextBtn.addEventListener("mousedown", () => {
         const newPosition = _findNewPosition(carouselInner, 1, (a, b) => a + b);
         carouselInner.style.left = newPosition + "px";
+
+        _incrementActiveDot(carouselInner, (a) => a + 1);
     });
 
     return nextBtn;
@@ -186,6 +168,8 @@ const _createPreviousButton = (carouselInner) => {
             (a, b) => a - b
         );
         carouselInner.style.left = newPosition + "px";
+
+        _incrementActiveDot(carouselInner, (a) => a - 1);
     });
     return prevBtn;
 };
@@ -193,11 +177,20 @@ const _createButton = () => {
     const btn = document.createElement("button");
 
     btn.style.position = "absolute";
-    const size = 5;
+    const size = 6;
     btn.style.height = size + "rem";
     btn.style.width = size + "rem";
-    btn.style.opacity = "70%";
+    btn.style.background = "black";
+    btn.style.border = "none";
+    btn.style.color = "white";
+    btn.style.opacity = "50%";
     btn.style.cursor = "pointer";
+
+    btn.addEventListener(
+        "mouseenter",
+        () => (btn.style.background = "rgb(30,30,30)")
+    );
+    btn.addEventListener("mouseleave", () => (btn.style.background = "black"));
 
     return btn;
 };
@@ -224,8 +217,26 @@ const _findNewPosition = (carouselInner, direction, func) => {
     if (currentPosition > 0) {
         currentPosition *= -1;
     }
-    console.log(currentPosition);
     return currentPosition;
+};
+const _incrementActiveDot = (carouselInner, incrementFunc) => {
+    const carouselContainer = carouselInner.parentElement.parentElement;
+    const carouselElements = [...carouselContainer.children];
+    let dotContainer = carouselElements.find((el) =>
+        el.classList.contains("carousel-dot-container")
+    );
+    const navDots = [...dotContainer.children];
+    for (let i = 0; i < navDots.length; i++) {
+        if (navDots[i].classList.contains("carousel-dot-active")) {
+            navDots[i].classList.remove("carousel-dot-active");
+            let nextDotIndex = incrementFunc(i) % navDots.length;
+            if (nextDotIndex < 0) {
+                nextDotIndex = navDots.length + nextDotIndex;
+            }
+            navDots[nextDotIndex].classList.add("carousel-dot-active");
+            break;
+        }
+    }
 };
 
 export {

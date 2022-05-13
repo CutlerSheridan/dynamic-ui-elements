@@ -54,7 +54,7 @@ Accepts the following arguments:
 
 #### TO-DO NEXT
 
--   add dots underneath that indicate which one you're on and are clickable to navigate
+-   make carousel dots clickable to navigate
 
 #### TO-DO LATER
 
@@ -75,6 +75,9 @@ Accepts the following arguments:
 
 #### DONE
 
+-   _0.2.3_
+-   make dots change image indication upon clicking instead of upon transition end
+-   make next/previous buttons highlight on hover
 -   _0.2.2_
 -   add carousel dots that indicate which image you're looking at
 -   _0.2.1_
