@@ -54,8 +54,8 @@ Accepts the following arguments:
 
 #### TO-DO NEXT
 
--   figure out a better way to dynamically calculate the arrow size
--   make carousel dots clickable to navigate
+-   figure out a better way to dynamically calculate the arrow size (should be easy now that I've changed the method functionality)
+-   add return values to documentation
 
 #### TO-DO LATER
 
@@ -64,8 +64,8 @@ Accepts the following arguments:
 ##### Behavior
 
 -   make carousel image a link to the image file
--   make carousel switch every five seconds using a while loop that adds an inner event listener (that only triggers once) for the next/previous buttons to break the loop and stop transitioning every five seconds
 -   recreate carousel upon document resize
+-   figure out which part of the carousel is causing that "undefined" in the body. Started when I changed createCarousel() to createAndInsertCarousel()
 
 ##### Style
 
@@ -75,6 +75,11 @@ Accepts the following arguments:
 
 #### DONE
 
+-   _0.2.5_
+-   make carousel dots clickable to navigate
+-   make carousel switch every four seconds
+-   stop auto-rotation if user clicks to switch an image manually
+-   stop auto-rotation if user clicks a nav dot
 -   _0.2.4_
 -   make carousel arrows invisible unless you're hovering over image
 -   prevent the arrows from disappearing on mobile

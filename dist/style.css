@@ -63,8 +63,8 @@ nav {
     /* border-radius: 0.5rem; */
 }
 .carousel {
-    border: 10px solid purple;
-    border-radius: 0.7rem;
+    /* border: 10px solid crimson; */
+    border-radius: 0.5rem;
 }
 .carousel-arrow {
     background: green;
@@ -73,6 +73,6 @@ nav {
     background: darkgrey;
 }
 .carousel-dot-active {
-    background: grey;
+    background: rgb(100, 100, 100);
 }
 /* --- CAROUSEL END --- */

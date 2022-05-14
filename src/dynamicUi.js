@@ -59,7 +59,8 @@ const makeNavbarDisappearWhenScrollingDown = (
     });
 };
 
-const createCarousel = (
+const createAndInsertCarousel = (
+    precedingElement,
     imgFilesArray,
     carouselWidth = "50%",
     transitionTime = ".3s",
@@ -85,10 +86,12 @@ const createCarousel = (
     );
     carousel.append(carouselInner);
     carouselContainer.append(carousel);
-    carousel.append(
-        _createPreviousButton(carouselInner),
-        _createNextButton(carouselInner)
-    );
+    precedingElement.after(carouselContainer);
+
+    const leftArrow = _createPreviousButton(carouselInner);
+    const rightArrow = _createNextButton(carouselInner);
+    carousel.append(leftArrow, rightArrow);
+
     document.addEventListener(
         "mousemove",
         (e) => {
@@ -99,8 +102,19 @@ const createCarousel = (
         { once: true }
     );
 
-    carouselContainer.append(_createNavDots(carouselInner));
-    return carouselContainer;
+    const dotContainer = _createNavDots(carouselInner);
+    carouselContainer.append(dotContainer);
+
+    const interval = setInterval(() => {
+        carouselInner.style.left =
+            _findNextPosition(carouselInner, 1, (a, b) => a + b) + "px";
+        _incrementActiveDot(carouselInner, (a) => a + 1);
+    }, 4000);
+    const dots = [...dotContainer.children];
+    const controls = [leftArrow, rightArrow, ...dots];
+    controls.forEach((control) =>
+        control.addEventListener("mousedown", () => clearInterval(interval))
+    );
 };
 const _createInnerCarousel = (
     imgFilesArray,
@@ -130,7 +144,11 @@ const _createNextButton = (carouselInner) => {
     nextBtn.style.right = "0";
 
     nextBtn.addEventListener("mousedown", () => {
-        const newPosition = _findNewPosition(carouselInner, 1, (a, b) => a + b);
+        const newPosition = _findNextPosition(
+            carouselInner,
+            1,
+            (a, b) => a + b
+        );
         carouselInner.style.left = newPosition + "px";
 
         _incrementActiveDot(carouselInner, (a) => a + 1);
@@ -144,7 +162,7 @@ const _createPreviousButton = (carouselInner) => {
     prevBtn.style.left = "0";
 
     prevBtn.addEventListener("mousedown", () => {
-        const newPosition = _findNewPosition(
+        const newPosition = _findNextPosition(
             carouselInner,
             -1,
             (a, b) => a - b
@@ -178,8 +196,9 @@ const _createButton = () => {
 
     return btn;
 };
-const _findNewPosition = (carouselInner, direction, func) => {
+const _findNextPosition = (carouselInner, direction, func) => {
     const imgWidth = carouselInner.offsetWidth;
+    console.log(`imgWidth = ${imgWidth}`);
     const indexOfPx = carouselInner.style.left.indexOf("px");
     let currentPosition = +carouselInner.style.left.slice(0, indexOfPx);
     if (currentPosition < 0) {
@@ -201,6 +220,7 @@ const _findNewPosition = (carouselInner, direction, func) => {
     if (currentPosition > 0) {
         currentPosition *= -1;
     }
+    console.log(`currentPosition = ${currentPosition}`);
     return currentPosition;
 };
 const _addDesktopArrowHoverBehavior = (carouselInner) => {
@@ -244,10 +264,19 @@ const _createNavDots = (carouselInner) => {
     for (let i = 0; i < imgs.length; i++) {
         const dot = _createDot();
         dot.dataset.index = i;
+        dot.style.cursor = "pointer";
         dotContainer.append(dot);
         if (i === 0) {
             dot.classList.add("carousel-dot-active");
         }
+        dot.addEventListener("mousedown", (e) => {
+            [...dotContainer.children].forEach((d) => {
+                d.classList.remove("carousel-dot-active");
+            });
+            e.target.classList.add("carousel-dot-active");
+            carouselInner.style.left =
+                -1 * carouselInner.offsetWidth * e.target.dataset.index + "px";
+        });
     }
     dotContainer.style.margin = "1rem 0";
     dotContainer.style.display = "flex";
@@ -258,7 +287,7 @@ const _createNavDots = (carouselInner) => {
 const _createDot = () => {
     const dot = document.createElement("div");
     dot.classList.add("carousel-dot");
-    const size = 1.25;
+    const size = 1.5;
     dot.style.height = size + "rem";
     dot.style.width = size + "rem";
     dot.style.borderRadius = "1rem";
@@ -288,5 +317,5 @@ const _incrementActiveDot = (carouselInner, incrementFunc) => {
 export {
     turnIntoDropdown,
     makeNavbarDisappearWhenScrollingDown,
-    createCarousel,
+    createAndInsertCarousel,
 };
