@@ -39,24 +39,21 @@ Accepts the following arguments:
 | transitionTime (= "0.2s")    | Customize the transition time             |
 | transitionStyle (= "linear") | Customize the transition style            |
 
-### createCarousel()
+### createAndInsertCarousel()
 
 Pass an array of file paths leading to images and get an image carousel.
 
 Accepts the following arguments:
 
-| Argument (= default)         | Description                            |
-| ---------------------------- | -------------------------------------- |
-| imgFilesArray                | Required. An array of image file paths |
-| carouselWidth (= "50%")      | Customize the width of the carousel    |
-| transitionTime (= "0.3s")    | Customize the transition time          |
-| transitionStyle (= "linear") | Customize the transition style         |
+| Argument (= default)         | Description                                                |
+| ---------------------------- | ---------------------------------------------------------- |
+| precedingElement             | Required. The DOM element you want to precede the carousel |
+| imgFilesArray                | Required. An array of image file paths                     |
+| carouselWidth (= "50%")      | Customize the width of the carousel                        |
+| transitionTime (= "0.3s")    | Customize the transition time                              |
+| transitionStyle (= "linear") | Customize the transition style                             |
 
 #### TO-DO NEXT
-
--   make carousel resize upon page resize
--   figure out a better way to dynamically calculate the arrow size (should be easy now that I've changed the method functionality)
--   add return values to documentation
 
 #### TO-DO LATER
 
@@ -69,11 +66,13 @@ Accepts the following arguments:
 
 ##### Style
 
--   Raise dropdown's z-axis
--   fix dropdown alignment
-
 #### DONE
 
+-   _1.0.0_
+-   adjust arrow width
+-   adjust arrow font
+-   Raise dropdown's z-axis
+-   fix dropdown alignment with box-sizing: content-box
 -   _0.2.6_
 -   fix that "undefined" that appears on the page
 -   figure out why carousel images become misaligned when dev console is closed but stay perfect when it's open (it was because the % width sometimes resulted in sub pixels that increased each slide)

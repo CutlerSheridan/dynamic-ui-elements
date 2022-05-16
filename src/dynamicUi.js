@@ -128,17 +128,6 @@ const createAndInsertCarousel = (
     controls.forEach((control) =>
         control.addEventListener("mousedown", () => clearInterval(interval))
     );
-
-    // window.addEventListener("resize", () => {
-    //     carouselContainer.remove();
-    //     createAndInsertCarousel(
-    //         precedingElement,
-    //         imgFilesArray,
-    //         carouselWidth,
-    //         transitionTime,
-    //         transitionStyle
-    //     );
-    // });
 };
 const _createInnerCarousel = (
     imgFilesArray,
@@ -162,7 +151,6 @@ const _createInnerCarousel = (
     return carouselInner;
 };
 const _createNextButton = (carouselInner) => {
-    console.log(`next button height = ${carouselInner.offsetHeight}`);
     const nextBtn = _createButton();
     nextBtn.textContent = ">";
     nextBtn.style.right = "0";
@@ -204,10 +192,13 @@ const _createButton = () => {
     const size = 7;
     btn.style.height = size + 1 + "rem";
     btn.style.width = size + "rem";
+    btn.style.maxWidth = "15%";
     btn.style.background = "black";
     btn.style.border = "none";
     btn.style.color = "white";
     btn.style.opacity = "50%";
+    btn.style.fontSize = "2.5rem";
+    btn.style.fontFamily = "Garamond";
     btn.style.cursor = "pointer";
     btn.style.transition = "all .1s linear";
     btn.classList.add("carousel-arrow");
@@ -222,7 +213,6 @@ const _createButton = () => {
 };
 const _findNextPosition = (carouselInner, direction, func) => {
     const imgWidth = carouselInner.offsetWidth;
-    console.log(`imgWidth = ${imgWidth}`);
     const indexOfPx = carouselInner.style.left.indexOf("px");
     let currentPosition = +carouselInner.style.left.slice(0, indexOfPx);
     if (currentPosition < 0) {
@@ -244,7 +234,6 @@ const _findNextPosition = (carouselInner, direction, func) => {
     if (currentPosition > 0) {
         currentPosition *= -1;
     }
-    console.log(`currentPosition = ${currentPosition}`);
     return currentPosition;
 };
 const _addDesktopArrowHoverBehavior = (carouselInner) => {
@@ -267,7 +256,6 @@ const _addDesktopArrowHoverBehavior = (carouselInner) => {
     );
 
     carouselInner.addEventListener("mouseleave", (e) => {
-        console.log(e);
         if (e.relatedTarget !== arrows[0] && e.relatedTarget !== arrows[1]) {
             arrows.forEach((arrow) => (arrow.style.opacity = "0"));
         }
@@ -281,7 +269,6 @@ const _addDesktopArrowHoverBehavior = (carouselInner) => {
     });
 };
 const _createNavDots = (carouselInner) => {
-    console.log(`createNavDots carousel width = ${carouselInner.offsetWidth}`);
     const dotContainer = document.createElement("div");
     dotContainer.classList.add("carousel-dot-container");
     const imgs = carouselInner.children;
