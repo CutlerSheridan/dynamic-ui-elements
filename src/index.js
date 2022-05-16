@@ -22,6 +22,4 @@ const imgs = [
 ];
 
 const elementBeforeCarousel = document.querySelector(".space-after-navbar");
-elementBeforeCarousel.after(
-    dynamicUi.createAndInsertCarousel(elementBeforeCarousel, imgs)
-);
+dynamicUi.createAndInsertCarousel(elementBeforeCarousel, imgs);

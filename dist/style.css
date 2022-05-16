@@ -63,7 +63,7 @@ nav {
     /* border-radius: 0.5rem; */
 }
 .carousel {
-    /* border: 10px solid crimson; */
+    border: 10px solid crimson;
     border-radius: 0.5rem;
 }
 .carousel-arrow {

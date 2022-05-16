@@ -70,7 +70,20 @@ const createAndInsertCarousel = (
     carouselContainer.style.display = "flex";
     carouselContainer.style.flexDirection = "column";
     carouselContainer.style.alignItems = "center";
-    carouselContainer.style.maxWidth = carouselWidth;
+    if (carouselWidth.indexOf("%") === -1) {
+        carouselContainer.style.maxWidth = carouselWidth;
+    } else {
+        const pageWidth = document.body.clientWidth;
+        const percent =
+            +carouselWidth.slice(0, carouselWidth.indexOf("%")) / 100;
+        if (Number.isInteger(pageWidth * percent)) {
+            carouselContainer.style.maxWidth = carouselWidth;
+        } else {
+            carouselContainer.style.maxWidth =
+                Math.floor(pageWidth * percent) + "px";
+        }
+    }
+    carouselContainer.style.minWidth = "30rem";
     carouselContainer.classList.add("carousel-container");
     const carousel = document.createElement("div");
     carousel.style.position = "relative";
@@ -115,6 +128,17 @@ const createAndInsertCarousel = (
     controls.forEach((control) =>
         control.addEventListener("mousedown", () => clearInterval(interval))
     );
+
+    // window.addEventListener("resize", () => {
+    //     carouselContainer.remove();
+    //     createAndInsertCarousel(
+    //         precedingElement,
+    //         imgFilesArray,
+    //         carouselWidth,
+    //         transitionTime,
+    //         transitionStyle
+    //     );
+    // });
 };
 const _createInnerCarousel = (
     imgFilesArray,

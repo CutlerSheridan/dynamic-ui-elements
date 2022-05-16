@@ -54,6 +54,7 @@ Accepts the following arguments:
 
 #### TO-DO NEXT
 
+-   make carousel resize upon page resize
 -   figure out a better way to dynamically calculate the arrow size (should be easy now that I've changed the method functionality)
 -   add return values to documentation
 
@@ -63,18 +64,19 @@ Accepts the following arguments:
 
 ##### Behavior
 
--   make carousel image a link to the image file
+-   make carousel image a link to the image file or just make the image big
 -   recreate carousel upon document resize
--   figure out which part of the carousel is causing that "undefined" in the body. Started when I changed createCarousel() to createAndInsertCarousel()
 
 ##### Style
 
--   figure out why carousel images become misaligned when dev console is closed but stay perfect when it's open
 -   Raise dropdown's z-axis
 -   fix dropdown alignment
 
 #### DONE
 
+-   _0.2.6_
+-   fix that "undefined" that appears on the page
+-   figure out why carousel images become misaligned when dev console is closed but stay perfect when it's open (it was because the % width sometimes resulted in sub pixels that increased each slide)
 -   _0.2.5_
 -   make carousel dots clickable to navigate
 -   make carousel switch every four seconds
